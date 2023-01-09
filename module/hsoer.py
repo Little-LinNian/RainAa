@@ -16,7 +16,7 @@ from graia.ariadne.util.cooldown import (
     CoolDown,
 )
 from graia.ariadne.model import Group, Member
-from AnimeThesaurus import (
+from rainaa.anime_thesaurus import (
     Talker,
     AnimeThesaurus,
 )
