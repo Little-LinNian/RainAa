@@ -1,4 +1,5 @@
 from dataclasses import dataclass, field
+from enum import member
 import pathlib
 from re import M
 from typing import List
@@ -103,7 +104,7 @@ async def list_record(app: Ariadne, msg: MessageChain, group: Group, source: Sou
 
 @alcommand(alc, send_error=True)
 @assign("记录")
-async def start_record(app: Ariadne, msg: MessageChain, group: Group, source: Source):
+async def start_record(app: Ariadne, msg: MessageChain, group: Group, source: Source,member: Member):
     gid = str(group.id)
     if gid in sessions:
         await app.send_group_message(group, "当前群组已经在记录聊天回放", quote=source)
@@ -126,7 +127,7 @@ async def start_record(app: Ariadne, msg: MessageChain, group: Group, source: So
 
     listener = Listener(record, bcc.getDefaultNamespace(), [GroupMessage], [], [])
     bcc.listeners.append(listener)
-    sessions[gid] = Node(listener, [])
+    sessions[gid] = Node(listener, [ChatRecordNode(sender=member.id, name=member.name,time=datetime.now(), message=msg.as_sendable())])
 
 
 @alcommand(alc, send_error=True)
