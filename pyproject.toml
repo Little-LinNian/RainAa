@@ -24,6 +24,7 @@ dependencies = [
     "graia-scheduler>=0.1.4",
     "mcstatus>=10.0.1",
     "bce>=4.7.9647",
+    "aiofiles>=22.1.0",
 ]
 requires-python = ">=3.10"
 license = {text = "APGL-3"}

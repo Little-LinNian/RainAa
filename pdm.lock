@@ -1,4 +1,10 @@
 [[package]]
+name = "aiofiles"
+version = "22.1.0"
+requires_python = ">=3.7,<4.0"
+summary = "File support for asyncio."
+
+[[package]]
 name = "aiohttp"
 version = "3.8.3"
 requires_python = ">=3.6"
@@ -484,9 +490,13 @@ summary = "Backport of pathlib-compatible object wrapper for zip files"
 
 [metadata]
 lock_version = "4.1"
-content_hash = "sha256:a331f48cf791a07818c3d732ae79505eb970644834ef3d40d92d4eca3fce4871"
+content_hash = "sha256:9ba265d16cc1d146aff93b2abab5e74e9c687783c87beebb1b8eb9b1ed54a2e5"
 
 [metadata.files]
+"aiofiles 22.1.0" = [
+    {url = "https://files.pythonhosted.org/packages/86/26/6e5060a159a6131c430e8a01ec8327405a19a449a506224b394e36f2ebc9/aiofiles-22.1.0.tar.gz", hash = "sha256:9107f1ca0b2a5553987a94a3c9959fe5b491fdf731389aa5b7b1bd0733e32de6"},
+    {url = "https://files.pythonhosted.org/packages/a0/48/d5d1ab7cfe46e573c3694fa1365442a7d7cadc3abb03d8507e58a3755bb2/aiofiles-22.1.0-py3-none-any.whl", hash = "sha256:1142fa8e80dbae46bb6339573ad4c8c0841358f79c6eb50a493dceca14621bad"},
+]
 "aiohttp 3.8.3" = [
     {url = "https://files.pythonhosted.org/packages/03/29/f249982899674802226f29bdf63ffa126b77e5080cf3404e649f3d2364aa/aiohttp-3.8.3-cp39-cp39-manylinux_2_17_ppc64le.manylinux2014_ppc64le.whl", hash = "sha256:92a2964319d359f494f16011e23434f6f8ef0434acd3cf154a6b7bec511e2fb7"},
     {url = "https://files.pythonhosted.org/packages/05/5e/f523ba8cdc9818b3fa6487da279f0c4ae5fba05c21d5617f0c33a74af668/aiohttp-3.8.3-cp311-cp311-musllinux_1_1_s390x.whl", hash = "sha256:e65bc19919c910127c06759a63747ebe14f386cda573d95bcc62b427ca1afc73"},

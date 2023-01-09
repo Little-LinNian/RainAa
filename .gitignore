@@ -4,6 +4,8 @@
 ### Python ###
 # Byte-compiled / optimized / DLL files
 __pycache__/
+cache/
+kayaku/
 *.py[cod]
 *$py.class
 data/
