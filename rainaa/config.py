@@ -3,7 +3,7 @@ from typing import List
 from kayaku import config, initialize
 from graia.saya import Channel
 
-initialize({"rainaa_config.{**}": "./static/kayaku.jsonc::{**}"})
+initialize({"rainaa_config.{**}": "./kayaku/kayaku.jsonc::{**}"})
 
 
 @config("rainaa_config.mirai")
