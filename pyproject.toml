@@ -1,0 +1,29 @@
+[tool.pdm]
+[tool.pdm.dev-dependencies]
+dev = [
+    "sourcery-cli>=1.0.2",
+    "requests>=2.28.1",
+]
+
+[project]
+name = ""
+version = ""
+description = ""
+authors = [
+    {name = "Little-LinNian", email = "2544704967@qq.com"},
+]
+dependencies = [
+    "graia-ariadne>=0.10.3",
+    "graia-saya>=0.0.17",
+    "graiax-fastapi>=0.2.1",
+    "graiax-shortcut>=0.2.1",
+    "pillow>=9.4.0",
+    "kayaku>=0.5.1",
+    "arclet-alconna-graia>=0.10.6",
+    "animethesaurus @ git+https://github.com/Little-LinNian/AnimeThesaurus",
+    "graia-scheduler>=0.1.4",
+    "mcstatus>=10.0.1",
+    "bce>=4.7.9647",
+]
+requires-python = ">=3.10"
+license = {text = "APGL-3"}
