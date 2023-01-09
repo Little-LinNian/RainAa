@@ -51,6 +51,7 @@ alc = Alconna(
 
 class ChatRecordNode(BaseModel):
     sender: int = 0
+    name: str = ""
     message: MessageChain = MessageChain("")
     time: datetime = datetime.now()
 
@@ -118,7 +119,7 @@ async def start_record(app: Ariadne, msg: MessageChain, group: Group, source: So
             return
         sessions[gid].nodes.append(
             ChatRecordNode(
-                sender=member.id, time=datetime.now(), message=msg.as_sendable()
+                sender=member.id, time=datetime.now(), message=msg.as_sendable(),name=member.name
             )
         )
         logger.debug(f"record group {gid} message")
@@ -185,4 +186,5 @@ async def replay_record(
         return
     record = record[reid.result - 1]
     fowards = [ForwardNode(i.sender, i.time, i.message) for i in record.nodes]
+    input(fowards)
     await app.send_group_message(group, MessageChain([Forward(fowards)]))
