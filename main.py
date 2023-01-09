@@ -35,7 +35,7 @@ try:
 except Exception as e:
     logger.exception(e)
     kayaku.save_all()
-    logger.warning("配置文件未按要求填写完成，请自行编辑 ./static/kayaku.jsonc")
+    logger.warning("配置文件未按要求填写完成，请自行编辑 ./kayaku/main.jsonc")
     quit()
 install(saya)
 

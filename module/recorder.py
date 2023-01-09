@@ -185,6 +185,5 @@ async def replay_record(
         await app.send_group_message(group, "当前群组没有这个聊天回放", quote=source)
         return
     record = record[reid.result - 1]
-    fowards = [ForwardNode(i.sender, i.time, i.message) for i in record.nodes]
-    input(fowards)
+    fowards = [ForwardNode(i.sender, i.time, i.message,i.name) for i in record.nodes]
     await app.send_group_message(group, MessageChain([Forward(fowards)]))
