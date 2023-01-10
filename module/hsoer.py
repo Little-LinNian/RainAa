@@ -1,40 +1,15 @@
 from graia.ariadne.app import Ariadne
-from graia.ariadne.event.message import (
-    GroupMessage,
-)
-from graia.ariadne.message.chain import (
-    MessageChain,
-)
-from graia.ariadne.message.element import (
-    Image,
-    Source,
-)
-from graia.ariadne.message.parser.base import (
-    DetectPrefix,
-)
-from graia.ariadne.util.cooldown import (
-    CoolDown,
-)
+from graia.ariadne.event.message import GroupMessage
+from graia.ariadne.message.chain import MessageChain
+from graia.ariadne.message.element import Image, Source
+from graia.ariadne.message.parser.base import DetectPrefix
 from graia.ariadne.model import Group, Member
-from rainaa.anime_thesaurus import (
-    Talker,
-    AnimeThesaurus,
-)
+from graia.ariadne.util.cooldown import CoolDown
+from graiax.shortcut.saya import decorate, dispatch, listen
 
-from graiax.shortcut.saya import (
-    listen,
-    dispatch,
-    decorate,
-)
-
-from rainaa.perm import (
-    Allow,
-    Ban,
-    PermissionDispatcher,
-)
-from rainaa.tools.text2image import (
-    text2image,
-)
+from rainaa.anime_thesaurus import AnimeThesaurus, Talker
+from rainaa.perm import Allow, Ban, PermissionDispatcher
+from rainaa.tools.text2image import text2image
 
 
 @listen(GroupMessage)

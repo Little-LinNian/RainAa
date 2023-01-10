@@ -1,45 +1,47 @@
-from dataclasses import dataclass, field
 import pathlib
-from re import M
+from dataclasses import dataclass
+from datetime import datetime
 from typing import List
-from graiax.shortcut.saya import dispatch
-from arclet.alconna import Alconna, Args, Option, CommandMeta
-from arclet.alconna.graia import assign, Match, alcommand
+
+import aiofiles
+from arclet.alconna import Alconna, Args, CommandMeta, Option
+from arclet.alconna.graia import Match, alcommand, assign
 from graia.ariadne.app import Ariadne
-from loguru import logger
-from graia.ariadne.entry import MessageChain, Group, Source, Image, Member, GroupMessage
+from graia.ariadne.entry import (Group, GroupMessage, Image, Member,
+                                 MessageChain, Source)
 from graia.ariadne.message.element import Forward, ForwardNode
 from graia.broadcast.entities.listener import Listener
-from sympy import im
-from rainaa.tools.text2image import text2image
-from contextvars import ContextVar
-import kayaku
-import aiofiles
-from datetime import datetime
+from loguru import logger
 from pydantic import BaseModel
 
+from rainaa.tools.text2image import text2image
 
 alc = Alconna(
     "!rec",
     Option(
         "列出",
+        alias=["list"],
         help_text="列出群聊记录",
     ),
     Option(
         "记录",
+        alias=["开始",'start','record'],
         help_text="开始记录群聊记录",
     ),
     Option(
         "结束",
+        alias=["停止", "stop", "end", "finish", "close"],
         help_text="停止记录群聊记录",
     ),
     Option(
         "清空",
+        alias=["clear"],
         help_text="清空群聊记录",
     ),
     Option(
         "回放",
         Args["reid", int],
+        alias=["play"],
         help_text="回放群聊记录",
     ),
     meta=CommandMeta(

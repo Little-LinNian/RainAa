@@ -1,42 +1,17 @@
-from graia.ariadne.app import Ariadne
-from graia.ariadne.message.element import (
-    Image,
-)
-from graia.ariadne.message.chain import (
-    MessageChain,
-)
+from arclet.alconna import Alconna, Args, CommandMeta, Option
+from arclet.alconna.graia import Match, alcommand, assign
 from creart import it
+from graia.ariadne.app import Ariadne
+from graia.ariadne.message.chain import MessageChain
+from graia.ariadne.message.element import At, Image
 from graia.ariadne.model import Group
-from graia.ariadne.message.element import (
-    At,
-    Image,
-)
-from graiax.shortcut.saya import dispatch
 from graia.saya import Saya
+from graiax.shortcut.saya import dispatch
+
 import kayaku
-from rainaa.config import (
-    BotConfig,
-    MiraiConfig,
-    SayaConfig,
-)
-from rainaa.perm import (
-    MasterPermission,
-    PermissionDispatcher,
-)
-from rainaa.tools.text2image import (
-    text2image,
-)
-from arclet.alconna import (
-    Alconna,
-    Args,
-    Option,
-    CommandMeta,
-)
-from arclet.alconna.graia import (
-    assign,
-    Match,
-    alcommand,
-)
+from rainaa.config import BotConfig, MiraiConfig, SayaConfig
+from rainaa.perm import MasterPermission, PermissionDispatcher
+from rainaa.tools.text2image import text2image
 
 module_control = Alconna(
     "!模块",

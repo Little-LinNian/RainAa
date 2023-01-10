@@ -1,9 +1,11 @@
 from dataclasses import dataclass, field
 from datetime import datetime
 from typing import List
+
 from graia.ariadne.message.chain import MessageChain
-from kayaku import config, initialize
 from graia.saya import Channel
+
+from kayaku import config, initialize
 
 initialize({"main_config.{**}": "./kayaku/main.jsonc::{**}"})
 initialize({"function_config.{**}": "./kayaku/function.jsonc::{**}"})
@@ -22,10 +24,12 @@ class MiraiConfig:
 
 @config("main_config.saya")
 class SayaConfig:
-    module_path: str = "./module"
-    'ep. "./module"'
+    module_path: str = "module"
+    'ep. "module" dont include any "/" or "\\" use "." instead' 
     deprecated_prefix: str = "deprecated_"
+    'ep. "deprecated_114514.py"'
     deprecated_modules: List[str] = field(default_factory=list)
+    'auto generated'
 
 
 @config("main_config.bot")

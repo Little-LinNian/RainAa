@@ -1,6 +1,5 @@
 import random
 
-
 AnimeThesaurus = {
     "mua": [
         "你想干嘛？（一脸嫌弃地后退）",

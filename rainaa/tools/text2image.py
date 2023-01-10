@@ -1,8 +1,8 @@
 import asyncio
-
 from io import BytesIO
 from pathlib import Path
-from PIL import Image, ImageFont, ImageDraw
+
+from PIL import Image, ImageDraw, ImageFont
 
 from .strings import get_cut_str
 

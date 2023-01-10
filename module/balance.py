@@ -1,32 +1,15 @@
-from graia.ariadne.app import Ariadne
-from graia.ariadne.message.chain import (
-    MessageChain,
-)
-from graia.ariadne.message.element import (
-    Source,
-)
-from graia.ariadne.util.cooldown import (
-    CoolDown,
-)
-from graia.ariadne.model import Group, Member
-from graiax.shortcut.saya import dispatch
-from bce.public.api import (
-    balance_chemical_equation,
-)
+from arclet.alconna import Alconna, Args, CommandMeta
+from arclet.alconna.graia import Match, alcommand
 from bce.option import Option
-from rainaa.perm import (
-    Ban,
-    PermissionDispatcher,
-)
-from arclet.alconna.graia import (
-    alcommand,
-    Match,
-)
-from arclet.alconna import (
-    Alconna,
-    Args,
-    CommandMeta,
-)
+from bce.public.api import balance_chemical_equation
+from graia.ariadne.app import Ariadne
+from graia.ariadne.message.chain import MessageChain
+from graia.ariadne.message.element import Source
+from graia.ariadne.model import Group, Member
+from graia.ariadne.util.cooldown import CoolDown
+from graiax.shortcut.saya import dispatch
+
+from rainaa.perm import Ban, PermissionDispatcher
 
 alc = Alconna(
     "!配平",

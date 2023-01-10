@@ -1,10 +1,7 @@
+from graia.ariadne.message.chain import MessageChain
+from graia.ariadne.message.element import Image
+
 from .text2image import text2image
-from graia.ariadne.message.chain import (
-    MessageChain,
-)
-from graia.ariadne.message.element import (
-    Image,
-)
 
 
 async def alconna_help_sender(output: str):

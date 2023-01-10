@@ -1,32 +1,14 @@
-from graia.ariadne.event.message import (
-    GroupMessage,
-)
-from graia.ariadne.message.chain import (
-    MessageChain,
-)
-from graia.ariadne.message.element import (
-    Image,
-    Source,
-)
+from arclet.alconna.manager import command_manager
 from graia.ariadne.app import Ariadne
+from graia.ariadne.event.message import GroupMessage
+from graia.ariadne.message.chain import MessageChain
+from graia.ariadne.message.element import Image, Source
+from graia.ariadne.message.parser.base import MatchContent
 from graia.ariadne.model import Group
-from arclet.alconna.manager import (
-    command_manager,
-)
-from graiax.shortcut.saya import (
-    listen,
-    dispatch,
-    decorate,
-)
-from graia.ariadne.util.cooldown import (
-    CoolDown,
-)
-from graia.ariadne.message.parser.base import (
-    MatchContent,
-)
-from rainaa.tools.text2image import (
-    text2image,
-)
+from graia.ariadne.util.cooldown import CoolDown
+from graiax.shortcut.saya import decorate, dispatch, listen
+
+from rainaa.tools.text2image import text2image
 
 
 @listen(GroupMessage)

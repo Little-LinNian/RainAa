@@ -1,16 +1,11 @@
 from re import L
-from graiax.shortcut.saya import (
-    schedule,
-    listen,
-)
-from graia.scheduler.timers import (
-    every_custom_seconds,
-)
-from graia.ariadne.event.lifecycle import (
-    ApplicationLaunch,
-)
-import kayaku
+
+from graia.ariadne.event.lifecycle import ApplicationLaunch
+from graia.scheduler.timers import every_custom_seconds
+from graiax.shortcut.saya import listen, schedule
 from loguru import logger
+
+import kayaku
 
 
 @schedule(every_custom_seconds(10))

@@ -1,40 +1,20 @@
 import abc
+import random
 from multiprocessing import Event
 from types import TracebackType
-from typing import List, Union
-from graia.ariadne.message.chain import (
-    MessageChain,
-)
-from graia.ariadne.event.message import (
-    GroupMessage,
-    OtherClientMessage,
-)
-from graia.broadcast.entities.dispatcher import (
-    BaseDispatcher,
-)
-from graia.broadcast.entities.event import (
-    BaseEvent,
-)
-from graia.broadcast.interfaces.dispatcher import (
-    DispatcherInterface,
-)
-from graia.ariadne.event.message import (
-    MessageEvent,
-)
-from graia.broadcast.exceptions import (
-    ExecutionStop,
-)
-from graia.ariadne import Ariadne
-from typing import Optional
-import random
-import kayaku
+from typing import List, Optional, Union
 
-from rainaa.config import (
-    BotConfig,
-    BanList,
-    AllowList,
-    FunctionControl,
-)
+from graia.ariadne import Ariadne
+from graia.ariadne.event.message import (GroupMessage, MessageEvent,
+                                         OtherClientMessage)
+from graia.ariadne.message.chain import MessageChain
+from graia.broadcast.entities.dispatcher import BaseDispatcher
+from graia.broadcast.entities.event import BaseEvent
+from graia.broadcast.exceptions import ExecutionStop
+from graia.broadcast.interfaces.dispatcher import DispatcherInterface
+
+import kayaku
+from rainaa.config import AllowList, BanList, BotConfig, FunctionControl
 
 
 class BasePermission:

@@ -3,6 +3,7 @@
 dev = [
     "sourcery-cli>=1.0.2",
     "requests>=2.28.1",
+    "isort>=5.11.4",
 ]
 
 [project]

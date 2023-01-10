@@ -1,7 +1,9 @@
-from launart import Launart, Launchable
-import kayaku, asyncio
+import asyncio
 
+from launart import Launart, Launchable
 from loguru import logger
+
+import kayaku
 
 
 class ConfigService(Launchable):

@@ -1,14 +1,14 @@
-from typing import List
-from loguru import logger
-from .config import (
-    SayaConfig,
-    FunctionControl,
-)
 import os
 from pathlib import Path
 from time import sleep
+from typing import List
+
 from graia.saya import Saya
+from loguru import logger
+
 import kayaku
+
+from .config import FunctionControl, SayaConfig
 
 
 def install(saya: Saya):
