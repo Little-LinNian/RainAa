@@ -7,8 +7,7 @@ import aiofiles
 from arclet.alconna import Alconna, Args, CommandMeta, Option
 from arclet.alconna.graia import Match, alcommand, assign
 from graia.ariadne.app import Ariadne
-from graia.ariadne.entry import (Group, GroupMessage, Image, Member,
-                                 MessageChain, Source)
+from graia.ariadne.entry import Group, GroupMessage, Image, Member, MessageChain, Source
 from graia.ariadne.message.element import Forward, ForwardNode
 from graia.broadcast.entities.listener import Listener
 from loguru import logger
@@ -25,7 +24,7 @@ alc = Alconna(
     ),
     Option(
         "记录",
-        alias=["开始",'start','record'],
+        alias=["开始", "start", "record"],
         help_text="开始记录群聊记录",
     ),
     Option(
@@ -105,7 +104,9 @@ async def list_record(app: Ariadne, msg: MessageChain, group: Group, source: Sou
 
 @alcommand(alc, send_error=True)
 @assign("记录")
-async def start_record(app: Ariadne, msg: MessageChain, group: Group, source: Source,member: Member):
+async def start_record(
+    app: Ariadne, msg: MessageChain, group: Group, source: Source, member: Member
+):
     gid = str(group.id)
     if gid in sessions:
         await app.send_group_message(group, "当前群组已经在记录聊天回放", quote=source)
@@ -121,14 +122,27 @@ async def start_record(app: Ariadne, msg: MessageChain, group: Group, source: So
             return
         sessions[gid].nodes.append(
             ChatRecordNode(
-                sender=member.id, time=datetime.now(), message=msg.as_sendable(),name=member.name
+                sender=member.id,
+                time=datetime.now(),
+                message=msg.as_sendable(),
+                name=member.name,
             )
         )
         logger.debug(f"record group {gid} message")
 
     listener = Listener(record, bcc.getDefaultNamespace(), [GroupMessage], [], [])
     bcc.listeners.append(listener)
-    sessions[gid] = Node(listener, [ChatRecordNode(sender=member.id, name=member.name,time=datetime.now(), message=msg.as_sendable())])
+    sessions[gid] = Node(
+        listener,
+        [
+            ChatRecordNode(
+                sender=member.id,
+                name=member.name,
+                time=datetime.now(),
+                message=msg.as_sendable(),
+            )
+        ],
+    )
 
 
 @alcommand(alc, send_error=True)
@@ -187,5 +201,5 @@ async def replay_record(
         await app.send_group_message(group, "当前群组没有这个聊天回放", quote=source)
         return
     record = record[reid.result - 1]
-    fowards = [ForwardNode(i.sender, i.time, i.message,i.name) for i in record.nodes]
+    fowards = [ForwardNode(i.sender, i.time, i.message, i.name) for i in record.nodes]
     await app.send_group_message(group, MessageChain([Forward(fowards)]))

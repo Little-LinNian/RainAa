@@ -2,8 +2,11 @@ from arclet.alconna.graia import AlconnaBehaviour, AlconnaDispatcher
 from arclet.alconna.manager import command_manager
 from creart import create
 from graia.ariadne.app import Ariadne
-from graia.ariadne.connection.config import (HttpClientConfig,
-                                             WebsocketClientConfig, config)
+from graia.ariadne.connection.config import (
+    HttpClientConfig,
+    WebsocketClientConfig,
+    config,
+)
 from graia.broadcast import Broadcast
 from graia.saya import Saya
 from launart import Launart
@@ -40,4 +43,5 @@ app = Ariadne(
         WebsocketClientConfig(host=mirai_config.host),
     ),
 )
-app.launch_blocking()
+if __name__ == "__main__":
+    app.launch_blocking()

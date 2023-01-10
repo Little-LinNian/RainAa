@@ -5,8 +5,7 @@ from types import TracebackType
 from typing import List, Optional, Union
 
 from graia.ariadne import Ariadne
-from graia.ariadne.event.message import (GroupMessage, MessageEvent,
-                                         OtherClientMessage)
+from graia.ariadne.event.message import GroupMessage, MessageEvent, OtherClientMessage
 from graia.ariadne.message.chain import MessageChain
 from graia.broadcast.entities.dispatcher import BaseDispatcher
 from graia.broadcast.entities.event import BaseEvent
