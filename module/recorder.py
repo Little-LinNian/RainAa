@@ -202,4 +202,6 @@ async def replay_record(
         return
     record = record[reid.result - 1]
     fowards = [ForwardNode(i.sender, i.time, i.message, i.name) for i in record.nodes]
-    await app.send_group_message(group, MessageChain([Forward(fowards)]))
+    # 每 50 条消息分一次包
+    for i in range(0, len(fowards), 50):
+        await app.send_group_message(group, MessageChain([Forward(fowards[i : i + 50])]))
