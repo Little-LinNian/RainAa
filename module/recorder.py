@@ -40,7 +40,7 @@ alc = Alconna(
     Option(
         "回放",
         Args["reid", int],
-        alias=["play"],
+        alias=["replay"],
         help_text="回放群聊记录",
     ),
     meta=CommandMeta(

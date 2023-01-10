@@ -25,6 +25,7 @@ if __name__ == "__main__":
         if data["command"] == "ota":
             msg = rdb.ota(data["url"])
             source = data["source"]
+            os.system("pdm install")
             rdb.reboot("system")
             with open("rdb_message.json", "w") as f:
                 json.dump(
