@@ -5,6 +5,26 @@ from zipfile import ZipFile
 import requests
 from loguru import logger
 
+from tqdm import tqdm
+
+def download(url: str, fname: str):
+    # 用流stream的方式获取url的数据
+    resp = requests.get(url, stream=True)
+    # 拿到文件的长度，并把total初始化为0
+    total = int(resp.headers.get('content-length', 0))
+    # 打开当前目录的fname文件(名字你来传入)
+    # 初始化tqdm，传入总数，文件名等数据，接着就是写入，更新等操作了
+    with open(fname, 'wb') as file, tqdm(
+        desc=fname,
+        total=total,
+        unit='iB',
+        unit_scale=True,
+        unit_divisor=1024,
+    ) as bar:
+        for data in resp.iter_content(chunk_size=1024):
+            size = file.write(data)
+            bar.update(size)
+
 
 class NotAFileError(Exception):
     pass
@@ -38,10 +58,8 @@ class Recovery:
         logger.info(f"Downloading OTA from {ota_url}")
         for i in range(3):
             try:
-                ota_file = requests.get(ota_url)
                 Path("./ota_cache").mkdir(parents=True, exist_ok=True)
-                with open("./ota_cache/update.zip", "wb") as f:
-                    f.write(ota_file.content)
+                download(ota_url, "./ota_cache/update.zip")
                 break
             except Exception as e:
                 logger.exception(e)
@@ -50,7 +68,7 @@ class Recovery:
                 if i == 2:
                     logger.error("Download failed, aborting...")
                     return False
-                return self.sideload("./ota_cache/update.zip")
+        return self.sideload("./ota_cache/update.zip")
 
     def cleanup(self):
         os.rmdir("./ota_cache")
