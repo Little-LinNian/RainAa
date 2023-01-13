@@ -4,12 +4,13 @@ from datetime import datetime
 from typing import List
 
 import aiofiles
-from arclet.alconna import Alconna, Args, CommandMeta, Option
+from arclet.alconna import Alconna, Args, CommandMeta, Option, Subcommand
 from arclet.alconna.graia import Match, alcommand, assign
 from graia.ariadne.app import Ariadne
-from graia.ariadne.entry import Group, GroupMessage, Image, Member, MessageChain, Source
+from graia.ariadne.entry import Group, GroupMessage, Image, Member, MessageChain, Source,Element
 from graia.ariadne.message.element import Forward, ForwardNode
 from graia.broadcast.entities.listener import Listener
+from rainaa.tools.classes import str_to_class
 from loguru import logger
 from pydantic import BaseModel
 
@@ -42,6 +43,21 @@ alc = Alconna(
         Args["reid", int],
         alias=["replay"],
         help_text="回放群聊记录",
+    ),
+    Subcommand(
+        "模式回放",
+        alias=["replaywith"],
+        help_text="设置回放模式",
+        args=Args["reid", int],
+        options=[
+            Option("谁", alias=["who"], help_text="只回放谁说的话", args=[Args["who", int,0]]),
+            Option(
+                "类型",
+                alias=["type"],
+                help_text="只回放某种类型的消息",
+                args=[Args["element", str,""]],
+            ),
+        ],
     ),
     meta=CommandMeta(
         description="群聊记录",
@@ -155,6 +171,7 @@ async def stop_record(app: Ariadne, msg: MessageChain, group: Group, source: Sou
     await app.send_group_message(group, "停止记录聊天回放", quote=source)
     bcc = app.broadcast
     bcc.listeners.remove(sessions[gid].listener)
+    sessions[gid].nodes.pop(-1)
     async with aiofiles.open(str(path), "r") as f:
         cfg = GroupChatRecord.parse_raw(await f.read())
         if gid not in cfg.group_chat_record:
@@ -204,4 +221,46 @@ async def replay_record(
     fowards = [ForwardNode(i.sender, i.time, i.message, i.name) for i in record.nodes]
     # 每 50 条消息分一次包
     for i in range(0, len(fowards), 50):
-        await app.send_group_message(group, MessageChain([Forward(fowards[i : i + 50])]))
+        await app.send_group_message(
+            group, MessageChain([Forward(fowards[i : i + 50])])
+        )
+
+@alcommand(alc, send_error=True)
+@assign("模式回放")
+async def replay_record_moded(
+    app: Ariadne, msg: MessageChain, group: Group, source: Source, reid: Match[int],who:Match[int],element:Match[str]
+):
+    if not who.result and not element.result:
+        await app.send_group_message(group, "他奶奶的，你参数呢", quote=source)
+        return
+    if who.result and  element.result:
+        await app.send_group_message(group, "他奶奶的，你怎么那么贪心，想要两根", quote=source)
+        return
+    gid = str(group.id)
+    async with aiofiles.open(str(path), "r") as f:
+        cfg: GroupChatRecord = GroupChatRecord.parse_raw(await f.read())
+    if gid not in cfg.group_chat_record:
+        await app.send_group_message(group, "当前群组没有聊天回放", quote=source)
+        return
+    record = cfg.group_chat_record[gid]
+    if len(record) == 0:
+        await app.send_group_message(group, "当前群组没有聊天回放", quote=source)
+        return
+    if reid.result - 1 > len(record):
+        await app.send_group_message(group, "当前群组没有这个聊天回放", quote=source)
+        return
+    record = record[reid.result - 1]
+    fowards = []
+    for i in record.nodes:
+        if who.result:
+            if i.sender == who.result:
+                fowards.append(ForwardNode(i.sender, i.time, i.message, i.name))
+        elif element.result:
+            e= str_to_class(Element,element.result,ignore_high_low=True)
+            if element.result in i.message:
+                fowards.append(ForwardNode(i.sender, i.time, i.message.include(), i.name))
+    # 每 50 条消息分一次包
+    for i in range(0, len(fowards), 50):
+        await app.send_group_message(
+            group, MessageChain([Forward(fowards[i : i + 50])])
+        )
