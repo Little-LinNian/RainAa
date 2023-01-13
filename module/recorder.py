@@ -46,16 +46,15 @@ alc = Alconna(
     ),
     Subcommand(
         "模式回放",
-        alias=["replaywith"],
         help_text="设置回放模式",
         args=Args["reid", int],
         options=[
-            Option("谁", alias=["who"], help_text="只回放谁说的话", args=[Args["who", int,0]]),
+            Option("谁", alias=["who"], help_text="只回放谁说的话", args=Args["who", int,0]),
             Option(
                 "类型",
                 alias=["type"],
                 help_text="只回放某种类型的消息",
-                args=[Args["element", str,""]],
+                args=Args["element", str,""],
             ),
         ],
     ),
