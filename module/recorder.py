@@ -7,13 +7,14 @@ import aiofiles
 from arclet.alconna import Alconna, Args, CommandMeta, Option, Subcommand
 from arclet.alconna.graia import Match, alcommand, assign
 from graia.ariadne.app import Ariadne
-from graia.ariadne.entry import Group, GroupMessage, Image, Member, MessageChain, Source,Element
+from graia.ariadne.entry import (At, AtAll, Element, Group, GroupMessage,
+                                 Image, Member, MessageChain, Plain, Source)
 from graia.ariadne.message.element import Forward, ForwardNode
 from graia.broadcast.entities.listener import Listener
-from rainaa.tools.classes import str_to_class
 from loguru import logger
 from pydantic import BaseModel
 
+from rainaa.tools.classes import str_to_class
 from rainaa.tools.text2image import text2image
 
 alc = Alconna(
@@ -49,12 +50,12 @@ alc = Alconna(
         help_text="设置回放模式",
         args=Args["reid", int],
         options=[
-            Option("谁", alias=["who"], help_text="只回放谁说的话", args=Args["who", int,0]),
+            Option("谁", alias=["who"], help_text="只回放谁说的话", args=Args["who", int, 0]),
             Option(
                 "类型",
                 alias=["type"],
                 help_text="只回放某种类型的消息",
-                args=Args["element", str,""],
+                args=Args["element", str, ""],
             ),
         ],
     ),
@@ -217,6 +218,7 @@ async def replay_record(
         await app.send_group_message(group, "当前群组没有这个聊天回放", quote=source)
         return
     record = record[reid.result - 1]
+    del record.nodes[0]
     fowards = [ForwardNode(i.sender, i.time, i.message, i.name) for i in record.nodes]
     # 每 50 条消息分一次包
     for i in range(0, len(fowards), 50):
@@ -224,16 +226,23 @@ async def replay_record(
             group, MessageChain([Forward(fowards[i : i + 50])])
         )
 
+
+p2c = {"plain": Plain, "image": Image, "at": At, "atall": AtAll}
+
+
 @alcommand(alc, send_error=True)
 @assign("模式回放")
 async def replay_record_moded(
-    app: Ariadne, msg: MessageChain, group: Group, source: Source, reid: Match[int],who:Match[int],element:Match[str]
+    app: Ariadne,
+    msg: MessageChain,
+    group: Group,
+    source: Source,
+    reid: Match[int],
+    who: Match[int],
+    element: Match[str],
 ):
-    if not who.result and not element.result:
+    if not who.available and not element.available:
         await app.send_group_message(group, "他奶奶的，你参数呢", quote=source)
-        return
-    if who.result and  element.result:
-        await app.send_group_message(group, "他奶奶的，你怎么那么贪心，想要两根", quote=source)
         return
     gid = str(group.id)
     async with aiofiles.open(str(path), "r") as f:
@@ -249,15 +258,33 @@ async def replay_record_moded(
         await app.send_group_message(group, "当前群组没有这个聊天回放", quote=source)
         return
     record = record[reid.result - 1]
+    del record.nodes[0]
     fowards = []
     for i in record.nodes:
-        if who.result:
+        if who.available and element.available:
+            e = p2c.get(element.result)
+            if not e:
+                await app.send_group_message(group, "你的 类型 参数有问题", quote=source)
+                return
+            if i.message.has(e) and i.sender == who.result:
+                fowards.append(
+                    ForwardNode(i.sender, i.time, i.message.include(e), i.name)
+                )
+        elif who.result:
             if i.sender == who.result:
                 fowards.append(ForwardNode(i.sender, i.time, i.message, i.name))
         elif element.result:
-            e= str_to_class(Element,element.result,ignore_high_low=True)
-            if element.result in i.message:
-                fowards.append(ForwardNode(i.sender, i.time, i.message.include(), i.name))
+            e = p2c.get(element.result)
+            if not e:
+                await app.send_group_message(group, "你的 类型 参数有问题", quote=source)
+                return
+            if i.message.has(e):
+                fowards.append(
+                    ForwardNode(i.sender, i.time, i.message.include(e), i.name)
+                )
+    if not fowards:
+        await app.send_group_message(group, "当前群组没有这个聊天回放", quote=source)
+        return
     # 每 50 条消息分一次包
     for i in range(0, len(fowards), 50):
         await app.send_group_message(

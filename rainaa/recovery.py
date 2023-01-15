@@ -4,7 +4,6 @@ from zipfile import ZipFile
 
 import requests
 from loguru import logger
-
 from tqdm import tqdm
 
 

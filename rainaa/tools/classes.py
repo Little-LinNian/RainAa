@@ -1,7 +1,9 @@
-from typing import Type
+from typing import Type, TypeVar
+
+T = TypeVar("T")
 
 
-def str_to_class(FatherClass: Type, wanted: str,ignore_high_low: bool) -> Type:
+def str_to_class(FatherClass: Type[T], wanted: str, ignore_high_low: bool) -> Type[T]:
     """将字符串转换为类"""
     subclasses = FatherClass.__subclasses__()
     for subclass in subclasses:

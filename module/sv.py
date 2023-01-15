@@ -14,7 +14,6 @@ alc = Alconna(
     ["!短视频", "！短视频", "短视频"],
     Args["main_args", str],
     Option("--图集视频"),
-    separators=[" ", ""],
     meta=CommandMeta(
         "短视频下载",
         example="!短视频 https://v.douyin.com/JVd6Jh/",
