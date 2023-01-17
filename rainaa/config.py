@@ -1,6 +1,6 @@
 from dataclasses import dataclass, field
 from datetime import datetime
-from typing import List
+from typing import Dict, List
 
 from graia.ariadne.message.chain import MessageChain
 from graia.saya import Channel
@@ -10,6 +10,7 @@ from kayaku import config, initialize
 initialize({"main_config.{**}": "./kayaku/main.jsonc::{**}"})
 initialize({"function_config.{**}": "./kayaku/function.jsonc::{**}"})
 initialize({"chat_record_config.{**}": "./kayaku/chat_record.jsonc::{**}"})
+initialize({"apiconfig.{**}": "./kayaku/api.jsonc::{**}"})
 
 
 @config("main_config.mirai")
@@ -38,6 +39,12 @@ class BotConfig:
     admins: List[int]
     bot_name: str
     master_denied_message: List[str]
+
+@config("apiconfig.gpt2")
+class GPT2Config:
+    url: str = ""
+    global_mode: bool = False
+    group_probability: Dict[str, int] = field(default_factory=dict)
 
 
 @config("function_config.function_control")
