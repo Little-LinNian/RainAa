@@ -31,7 +31,7 @@ async def aichat(
                 if not resp.status == 200:
                     return
                 data = await resp.json()
-                await app.send_group_message(group, data["text"],quote=source)
+                await app.send_group_message(group, data["result"],quote=source)
     if str(group.id) not in cfg.group_probability:
         cfg.group_probability[str(group.id)] = 0
         kayaku.save_all()
@@ -54,7 +54,7 @@ async def aichat(
             if not resp.status == 200:
                 return
             data = await resp.json()
-            await app.send_group_message(group, data["text"],quote=source)
+            await app.send_group_message(group, data["result"],quote=source)
 
 @listen("GroupMessage")
 @dispatch(CoolDown(0.7))
