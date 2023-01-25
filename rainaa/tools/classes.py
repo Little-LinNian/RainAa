@@ -10,6 +10,5 @@ def str_to_class(FatherClass: Type[T], wanted: str, ignore_high_low: bool) -> Ty
         if ignore_high_low:
             if subclass.__name__.lower() == wanted.lower():
                 return subclass
-        else:
-            if subclass.__name__ == wanted:
-                return subclass
+        elif subclass.__name__ == wanted:
+            return subclass

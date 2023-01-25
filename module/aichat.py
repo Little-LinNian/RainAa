@@ -28,7 +28,7 @@ async def aichat(
                 session = 0
             session = group.id
             async with s.get(f"{url}/?session={session}&text={text}") as resp:
-                if not resp.status == 200:
+                if resp.status != 200:
                     return
                 data = await resp.json()
                 await app.send_group_message(group, data["result"],quote=source)
@@ -51,7 +51,7 @@ async def aichat(
             session = 0
         session = group.id
         async with s.get(f"{url}/?session={session}&text={text}") as resp:
-            if not resp.status == 200:
+            if resp.status != 200:
                 return
             data = await resp.json()
             await app.send_group_message(group, data["result"],quote=source)

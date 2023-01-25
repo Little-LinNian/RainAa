@@ -77,7 +77,7 @@ async def fgp(
     if not gid.available and main_args.available:
         return
     allowlist = kayaku.create(AllowList)
-    if not main_args.result in allowlist.allow_group:
+    if main_args.result not in allowlist.allow_group:
         await app.send_group_message(group, "哪来的功能，没这玩意")
         return
     if re.result:
@@ -110,7 +110,7 @@ async def fps(
     if not id.available and main_args.available:
         return
     allowlist = kayaku.create(AllowList)
-    if not main_args.result in allowlist.allow_private:
+    if main_args.result not in allowlist.allow_private:
         await app.send_group_message(group, "哪来的功能，没这玩意")
         return
     if re.result:
@@ -144,7 +144,7 @@ async def fgm(
     if not id.available and main_args.available and gid.available:
         return
     allowlist = kayaku.create(AllowList)
-    if not main_args.result in allowlist.allow_group_member:
+    if main_args.result not in allowlist.allow_group_member:
         await app.send_group_message(group, "哪来的功能，没这玩意")
         return
     if re.result:
@@ -179,7 +179,7 @@ async def bgp(
     if not gid.available and main_args.available:
         return
     banlist = kayaku.create(BanList)
-    if not main_args.result in banlist.ban_group:
+    if main_args.result not in banlist.ban_group:
         await app.send_group_message(group, "哪来的功能，没这玩意")
         return
     if re.result:
@@ -212,7 +212,7 @@ async def bps(
     if not id.available and main_args.available:
         return
     banlist = kayaku.create(BanList)
-    if not main_args.result in banlist.ban_private:
+    if main_args.result not in banlist.ban_private:
         await app.send_group_message(group, "哪来的功能，没这玩意")
         return
     if re.result:
@@ -246,7 +246,7 @@ async def bgm(
     if not id.available and main_args.available and gid.available:
         return
     banlist = kayaku.create(BanList)
-    if not main_args.result in banlist.ban_group_member:
+    if main_args.result not in banlist.ban_group_member:
         await app.send_group_message(group, "哪来的功能，没这玩意")
         return
     if re.result:
