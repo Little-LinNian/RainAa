@@ -43,7 +43,7 @@ class RainAaDeveloperBridge:
         self.boot(partition)
 
     def sideload(self, path: str):
-        if not self.is_running == "recovery":
+        if self.is_running != "recovery":
             logger.error("Not in recovery")
             self.shutdown()
             return
@@ -51,7 +51,7 @@ class RainAaDeveloperBridge:
         recovery.sideload(path)
 
     def ota(self, url: str):
-        if not self.is_running == "recovery":
+        if self.is_running != "recovery":
             logger.info("Rebooting to recovery")
             self.reboot("recovery")
         logger.info(f"OTA {url}")

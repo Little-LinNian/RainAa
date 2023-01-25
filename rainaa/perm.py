@@ -62,12 +62,12 @@ class Ban(BasePermission):
 
     async def target(self, event: MessageEvent) -> bool:
         banlist = kayaku.create(BanList)
-        if not self.func_name in banlist.ban_private:
+        if self.func_name not in banlist.ban_private:
             banlist.ban_private[self.func_name] = []
         if isinstance(event, GroupMessage):
-            if not self.func_name in banlist.ban_group:
+            if self.func_name not in banlist.ban_group:
                 banlist.ban_group[self.func_name] = []
-            if not self.func_name in banlist.ban_group_member:
+            if self.func_name not in banlist.ban_group_member:
                 banlist.ban_group_member[self.func_name] = {}
             if (
                 str(event.sender.group.id) in banlist.ban_group_member[self.func_name]
@@ -95,12 +95,12 @@ class Allow(BasePermission):
 
     async def target(self, event: MessageEvent) -> bool:
         allowlist = kayaku.create(AllowList)
-        if not self.func_name in allowlist.allow_private:
+        if self.func_name not in allowlist.allow_private:
             allowlist.allow_private[self.func_name] = []
         if isinstance(event, GroupMessage):
-            if not self.func_name in allowlist.allow_group:
+            if self.func_name not in allowlist.allow_group:
                 allowlist.allow_group[self.func_name] = []
-            if not self.func_name in allowlist.allow_group_member:
+            if self.func_name not in allowlist.allow_group_member:
                 allowlist.allow_group_member[self.func_name] = {}
 
             if (

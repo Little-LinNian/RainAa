@@ -1690,8 +1690,7 @@ class Talker:
     def random(self, chat: str):
 
         try:
-            reply = random.choice(AnimeThesaurus[chat])
-            return reply
+            return random.choice(AnimeThesaurus[chat])
         except KeyError as e:
             if self.return_unknown:
                 return random.choice(unknown)
