@@ -40,12 +40,20 @@ class BotConfig:
     bot_name: str
     master_denied_message: List[str]
 
+@config("main_config.database")
+class DatabaseConfig:
+    mongo_url: str = "mongodb://localhost:27017"
+
 @config("apiconfig.gpt2")
 class GPT2Config:
     url: str = ""
     global_mode: bool = False
     group_probability: Dict[str, int] = field(default_factory=dict)
 
+@config("apiconfig.fakegocq")
+class FakeGoCQConfig:
+    sever: str = "0.0.0.0"
+    port: int = 5656
 
 @config("function_config.function_control")
 class FunctionControl:
