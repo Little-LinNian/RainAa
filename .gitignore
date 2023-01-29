@@ -7,6 +7,7 @@ __pycache__/
 cache/
 kayaku/
 ota_cache/
+key.txt
 ota_backup/
 *.py[cod]
 *$py.class
