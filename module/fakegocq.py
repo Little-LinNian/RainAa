@@ -55,7 +55,7 @@ async def spm(model: PushooModel, user_id: int, token: str):
 
     
 
-@channel.use(RouteSchema("/send_group_msg", methods=["GET"]))
+@channel.use(RouteSchema("/send_group_msg", methods=["POST"]))
 async def sgm(model: PushooModel, group_id: int, token: str):
     app = Ariadne.current()
     message = jionlp.remove_ip_address(model.message) # 移除 ip 地址
