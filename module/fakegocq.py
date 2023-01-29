@@ -43,7 +43,7 @@ async def gtoken(app: Ariadne):
 async def spm(message: str, user_id: int, token: str):
     app = Ariadne.current()
     message = jionlp.remove_ip_address(message) # 移除 ip 地址
-    if token == key_now(app.account,startup_time,randint):
+    if token == key_now():
             message_id = await app.send_friend_message(user_id, message)
             return {"status": "ok", "data": {"message_id": message_id}}
     else:
@@ -55,7 +55,7 @@ async def spm(message: str, user_id: int, token: str):
 async def sgm(message: str, group_id: int, token: str):
     app = Ariadne.current()
     message = jionlp.remove_ip_address(message) # 移除 ip 地址
-    if token == key_now(app.account,startup_time,randint):
+    if token == key_now():
             message_id = await app.send_group_message(group_id, message)
             return {"status": "ok", "data": {"message_id": message_id}}
     else:
