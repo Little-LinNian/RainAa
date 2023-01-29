@@ -19,7 +19,6 @@ async def aichat(
     cfg = kayaku.create(GPT2Config)
     url = cfg.url
     if url == "":
-        await app.send_group_message(group, "机器人还没配置好呢")
         return
     if message.has(At) and message.get(At)[0].target == app.account:
         text = message.include(Plain).display
