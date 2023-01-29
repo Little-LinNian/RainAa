@@ -11,6 +11,8 @@ from pathlib import Path
 import random
 import hashlib
 
+from pydantic import BaseModel
+
 channel = Channel.current()
 
 
@@ -38,11 +40,13 @@ async def gtoken(app: Ariadne):
     logger.info(f"FakeGocQ api 已启动，key 为 {key}")
     time.sleep(5)
     
+class PushooModel(BaseModel):
+    message: str
 
-@channel.use(RouteSchema("/send_private_msg", methods=["GET"]))
-async def spm(message: str, user_id: int, token: str):
+@channel.use(RouteSchema("/send_private_msg", methods=["POST"]))
+async def spm(model: PushooModel, user_id: int, token: str):
     app = Ariadne.current()
-    message = jionlp.remove_ip_address(message) # 移除 ip 地址
+    message = jionlp.remove_ip_address(model.message) # 移除 ip 地址
     if token == key_now():
             message_id = await app.send_friend_message(user_id, message)
             return {"status": "ok", "data": {"message_id": message_id}}
@@ -52,9 +56,9 @@ async def spm(message: str, user_id: int, token: str):
     
 
 @channel.use(RouteSchema("/send_group_msg", methods=["GET"]))
-async def sgm(message: str, group_id: int, token: str):
+async def sgm(model: PushooModel, group_id: int, token: str):
     app = Ariadne.current()
-    message = jionlp.remove_ip_address(message) # 移除 ip 地址
+    message = jionlp.remove_ip_address(model.message) # 移除 ip 地址
     if token == key_now():
             message_id = await app.send_group_message(group_id, message)
             return {"status": "ok", "data": {"message_id": message_id}}
