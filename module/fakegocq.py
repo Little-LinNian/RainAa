@@ -7,6 +7,7 @@ import jionlp
 from fastapi.responses import Response
 from loguru import logger
 import time
+from pathlib import Path
 import random
 import hashlib
 
@@ -20,13 +21,20 @@ randint = random.randint(0,100000)
 startup_time = int(time.time())
 
 def gen_key(qq: int, time: int, random: int):
-    return hashlib.md5(f"{qq}{time}{random}".encode("utf-8")).hexdigest()
+    with open("key.txt","w",encoding="utf-8") as f:
+        key = hashlib.md5(f"{qq}{time}{random}".encode("utf-8")).hexdigest()
+        f.write(key)
 
-
+def key_now():
+    with open("key.txt","r",encoding="utf-8") as f:
+        key = f.read()
+        return key
 
 @listen(ApplicationLaunched)
 async def gtoken(app: Ariadne):
-    key = gen_key(app.account,startup_time,randint)
+    if not Path("key.txt").exists():
+        gen_key(app.account,startup_time,randint)
+    key = key_now()
     logger.info(f"FakeGocQ api 已启动，key 为 {key}")
     time.sleep(5)
     
