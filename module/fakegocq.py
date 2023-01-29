@@ -41,7 +41,7 @@ async def gtoken(app: Ariadne):
     time.sleep(5)
 
 
-@channel.use(RouteSchema("/send_private_msg", methods=["POST"]))
+@channel.use(RouteSchema("/send_private_msg", methods=["GET","POST"]))
 async def spm(message: str, user_id: int, token: str):
     app = Ariadne.current()
     message = jionlp.remove_ip_address(message) # 移除 ip 地址
@@ -53,7 +53,7 @@ async def spm(message: str, user_id: int, token: str):
 
     
 
-@channel.use(RouteSchema("/send_group_msg", methods=["POST"]))
+@channel.use(RouteSchema("/send_group_msg", methods=["GET","POST"]))
 async def sgm(message: str, group_id: int, token: str):
     app = Ariadne.current()
     message = jionlp.remove_ip_address(message) # 移除 ip 地址
