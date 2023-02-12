@@ -7,6 +7,7 @@ _Raining?_
 [![GitHub](https://img.shields.io/github/license/Little-LinNian/RainAa)](https://www.gnu.org/licenses/agpl-3.0)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 ![Python version: 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)
+[![CodeFactor](https://www.codefactor.io/repository/github/little-linnian/rainaa/badge)](https://www.codefactor.io/repository/github/little-linnian/rainaa)
 
 </div>
 
